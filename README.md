@@ -35,7 +35,12 @@ Uso de la API
 Puedes probar los endpoints de la API utilizando herramientas como Postman o curl. Aquí hay algunos ejemplos de endpoints:
 
 GET /api/Medico: Obtiene todos los médicos
+
 POST /api/Medico: Crea un nuevo médico
+
 GET /api/Medico/{id}: Obtiene un médico específico
+
 PUT /api/Medico/{id}: Actualiza un médico existente
+
 DELETE /api/Medico/{id}: Elimina un médico
+
