@@ -5,6 +5,7 @@ using PruebaTecnicaTbTb.Models;
 
 namespace PruebaTecnicaTbTb.Services
 {
+    //hago el servicio para hacer toda la logica e evitar llamar el contexto de la base de datos en los controladores
     public class MedicoService : IMedicoService
     {
         private readonly DbContextApp _context;
@@ -79,6 +80,7 @@ namespace PruebaTecnicaTbTb.Services
             {
                 Nombre = medicoDto.Nombre,
                 Especialidad = medicoDto.Especialidad,
+                //Configuro la fecha ya que c# no la recibe en el formato original el API
                 FechaIngreso = medicoDto.FechaIngreso ?? DateTime.UtcNow
             };
 

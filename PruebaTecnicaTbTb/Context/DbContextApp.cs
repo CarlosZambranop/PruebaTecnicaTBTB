@@ -5,6 +5,7 @@ namespace PruebaTecnicaTbTb.Context
 {
     public class DbContextApp:DbContext
     {
+        //Creo la conexion para las entidades 
         public DbContextApp(DbContextOptions<DbContextApp> options) : base(options)
         {
         }
