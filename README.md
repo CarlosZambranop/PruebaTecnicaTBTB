@@ -9,7 +9,7 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 
 ## Pasos para Clonar y Ejecutar el Proyecto
 
-# Clonar el Repositorio
+Clonar el Repositorio
 Abre una terminal y ejecuta el siguiente comando:
 git clone https://github.com/tu-usuario/nombre-del-repositorio.git
 
