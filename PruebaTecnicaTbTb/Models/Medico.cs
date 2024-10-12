@@ -2,7 +2,7 @@
 
 namespace PruebaTecnicaTbTb.Models
 {
-    //genero el modelo medico
+   //Modelo medico
     public class Medico
     {
         public int MedicoID { get; set; } // Clave primaria

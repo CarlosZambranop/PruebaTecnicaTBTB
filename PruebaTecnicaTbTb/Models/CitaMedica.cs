@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PruebaTecnicaTbTb.Models
 {
-    //genero el modelos de muchos muchos 
     public class CitaMedica
     {
         [Key]

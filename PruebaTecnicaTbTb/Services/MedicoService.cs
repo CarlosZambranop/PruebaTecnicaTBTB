@@ -5,47 +5,52 @@ using PruebaTecnicaTbTb.Models;
 
 namespace PruebaTecnicaTbTb.Services
 {
-    //hago el servicio para hacer toda la logica e evitar llamar el contexto de la base de datos en los controladores
+    // Servicio que maneja la lógica de negocio relacionada con los médicos.
+    // Implementa IMedicoService y se encarga de las operaciones CRUD para los médicos.
     public class MedicoService : IMedicoService
     {
         private readonly DbContextApp _context;
+
+        // Constructor del servicio MedicoService.
+        // Recibe el contexto de la base de datos inyectado por el contenedor de dependencias.
         public MedicoService(DbContextApp dbContextApp)
         {
             _context = dbContextApp;
         }
+
+        // Obtiene una lista de todos los médicos.
         public async Task<List<Medico>> GetMedicos()
         {
-            return _context.medico.ToList();
+            return await _context.medico.ToListAsync();
         }
+
+        // Obtiene un médico por su ID.
+        // Retorna un objeto Medico vacío si no se encuentra.
         public async Task<Medico> GetMedicoById(int id)
         {
-            var result = new Medico();
-            if (id != null)
-            {
-                result = _context.medico.Where(x => x.MedicoID == id).FirstOrDefault();
-            }
-            return result;
+            return await _context.medico.FirstOrDefaultAsync(x => x.MedicoID == id) ?? new Medico();
         }
+
+        // Actualiza la información de un médico existente.
+        // Retorna null si el médico no se encuentra.
+        // Puede lanzar DbUpdateConcurrencyException si hay problemas de concurrencia.
         public async Task<Medico> UpdateMedicoAsync(int id, MedicoDto medicoDto)
         {
             var medico = await _context.medico.FindAsync(id);
-
             if (medico == null)
             {
                 return null;
             }
 
-            // Actualizamos solo los campos que se proporcionan en el DTO
+            // Actualiza solo los campos proporcionados en el DTO
             if (!string.IsNullOrWhiteSpace(medicoDto.Nombre))
             {
                 medico.Nombre = medicoDto.Nombre;
             }
-
             if (!string.IsNullOrWhiteSpace(medicoDto.Especialidad))
             {
                 medico.Especialidad = medicoDto.Especialidad;
             }
-
             if (medicoDto.FechaIngreso.HasValue)
             {
                 medico.FechaIngreso = medicoDto.FechaIngreso.Value;
@@ -70,24 +75,29 @@ namespace PruebaTecnicaTbTb.Services
             return medico;
         }
 
+        // Verifica si existe un médico con el ID especificado.
         private bool MedicoExists(int id)
         {
             return _context.medico.Any(e => e.MedicoID == id);
         }
+
+        // Crea un nuevo médico en la base de datos.
         public async Task<Medico> CreateMedicoAsync(MedicoDto medicoDto)
         {
             var medico = new Medico
             {
                 Nombre = medicoDto.Nombre,
                 Especialidad = medicoDto.Especialidad,
-                //Configuro la fecha ya que c# no la recibe en el formato original el API
+                // Configura la fecha ya que C# no la recibe en el formato original del API
                 FechaIngreso = medicoDto.FechaIngreso ?? DateTime.UtcNow
             };
-
             _context.medico.Add(medico);
             await _context.SaveChangesAsync();
             return medico;
         }
+
+        // Elimina un médico de la base de datos.
+        // Retorna true si el médico fue eliminado, false si no se encontró.
         public async Task<bool> DeleteMedicoAsync(int id)
         {
             var medico = await _context.medico.FindAsync(id);
@@ -95,10 +105,8 @@ namespace PruebaTecnicaTbTb.Services
             {
                 return false;
             }
-
             _context.medico.Remove(medico);
             await _context.SaveChangesAsync();
-
             return true;
         }
     }

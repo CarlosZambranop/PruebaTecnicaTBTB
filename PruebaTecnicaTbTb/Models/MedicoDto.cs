@@ -2,6 +2,7 @@
 
 namespace PruebaTecnicaTbTb.Models
 {
+    //Dto para evitar datos inecesarios en la creacion
     public class MedicoDto
     {
         [Required]
